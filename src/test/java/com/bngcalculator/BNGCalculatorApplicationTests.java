@@ -1,10 +1,10 @@
-package practiceapps.com.example.demo;
+package com.bngcalculator;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
-class DemoApplicationTests {
+class BNGCalculatorApplicationTests {
 
 	@Test
 	void contextLoads() {
