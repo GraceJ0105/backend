@@ -10,6 +10,6 @@ public class Controller {
    @CrossOrigin(origins = "http://localhost:3000")
    @GetMapping("/health")
     public String getHealthCheck() {
-        return "You got your endpoint";
+        return "You hit the endpoint";
     }
 }
