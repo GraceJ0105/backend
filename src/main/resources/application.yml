@@ -1,0 +1,12 @@
+spring:
+  datasource:
+    url: jdbc:mysql://localhost:3306/bng_assessment
+    username: root
+    password: password
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    hikari:
+      keepalive-time: 240000
+  jpa:
+    database: mysql
+    hibernate:
+      ddl-auto: none
