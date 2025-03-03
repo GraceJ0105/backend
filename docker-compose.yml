@@ -1,0 +1,19 @@
+version: '3'
+
+services:
+  percona:
+    image: percona:8.0.33-25
+    restart: always
+    platform: linux/x86_64
+    environment:
+      MYSQL_ROOT_PASSWORD: password
+      MYSQL_DATABASE: bng_assessment
+    ports:
+      - "3306:3306"
+    volumes:
+      - db:/var/lib/mysql
+      - ./database/init.sql:/docker-entrypoint-initdb.d/init.sql
+
+volumes:
+  db:
+    driver: local
