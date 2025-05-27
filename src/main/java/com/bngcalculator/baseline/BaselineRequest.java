@@ -6,7 +6,6 @@ import lombok.Setter;
 
 @Getter
 @Setter
-@RequiredArgsConstructor
 public class BaselineRequest {
 
     private String broadHabitat;
@@ -14,5 +13,15 @@ public class BaselineRequest {
     private double baselineAreaValue;
     private String condition;
     private String strategicSignificance;
+
+    @Override
+    public String toString() {
+        return "BaselineRequest{" +
+                "broadHabitat='" + broadHabitat + '\'' +
+                ", habitatType=" + habitatType +
+                ", condition='" + condition + '\'' +
+                '}';
+    }
+
 
 }

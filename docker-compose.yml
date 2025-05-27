@@ -1,5 +1,3 @@
-version: '3'
-
 services:
   percona:
     image: percona:8.0.33-25

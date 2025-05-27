@@ -28,4 +28,23 @@ public class BaselineController {
 
         return (ResponseEntity<?>) response;
     }
+
+    @PostMapping("/conditionScore")
+    public ResponseEntity<?> getConditionScore(@RequestBody BaselineRequest request) {
+
+        logger.info("Request received: {}", request);
+
+
+        String condition = request.getCondition();
+        String broadHabitat = request.getBroadHabitat();
+        String habitatType = request.getHabitatType();
+
+        logger.info("Condition received in request: {}", condition);
+
+        Object response = service.findConditionScore(broadHabitat, habitatType, condition);
+
+        logger.info("Condition score being returned: {}", response);
+
+        return (ResponseEntity<?>) response;
+    }
 }

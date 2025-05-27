@@ -2,6 +2,7 @@ package com.bngcalculator.service;
 
 import com.bngcalculator.db.DistinctivenessProjection;
 import com.bngcalculator.db.G1AllHabitatsRepository;
+import com.bngcalculator.db.G8ConditionLookUpRepository;
 import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -22,14 +23,17 @@ public class BaselineCalculationService {
     private final Logger logger = LoggerFactory.getLogger(BaselineCalculationService.class);
 
     @Autowired
-    private G1AllHabitatsRepository repository;
+    private G1AllHabitatsRepository g1Repository;
+
+    @Autowired
+    private G8ConditionLookUpRepository g8Repository;
 
     public ResponseEntity<?> findDistinctiveness(String broadHabitat, String habitatType) {
         logger.info("Finding distinctiveness for habitatType: {}", habitatType);
 
         try {
 
-            DistinctivenessProjection result = repository.findByHabitatTypeAndBroadHabitat(habitatType, broadHabitat);
+            DistinctivenessProjection result = g1Repository.findByHabitatTypeAndBroadHabitat(habitatType, broadHabitat);
             String distinctivenessCategory = result.getDistinctivenessCategory();
             Integer distinctivenessScore = result.getDistinctivenessScore();
 
@@ -45,4 +49,26 @@ public class BaselineCalculationService {
             return new ResponseEntity<>("Failed to connect to database and retrieve distinctiveness values" + e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
+
+
+    public ResponseEntity<?> findConditionScore(String broadHabitat, String habitatType, String condition) {
+        logger.info("Finding condition score for condition: {}", condition);
+
+        // 🔥 Fix: Convert the condition to the correct format
+        condition = condition.toLowerCase().replace(" ", "_");
+
+        try {
+            double conditionScore = g8Repository.getConditionScore(broadHabitat, habitatType, condition);
+            Map<String, Object> response = new LinkedHashMap<>();
+            response.put("conditionScore", conditionScore);
+
+            return new ResponseEntity<>(response, HttpStatus.OK);
+
+        } catch (DataAccessException e) {
+            logger.error("Database connectivity error: {}", e.getMessage());
+            return new ResponseEntity<>("Failed to connect to database and retrieve condition score" + e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+
 }
