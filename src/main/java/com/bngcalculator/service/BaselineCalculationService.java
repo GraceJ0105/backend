@@ -54,7 +54,6 @@ public class BaselineCalculationService {
     public ResponseEntity<?> findConditionScore(String broadHabitat, String habitatType, String condition) {
         logger.info("Finding condition score for condition: {}", condition);
 
-        // 🔥 Fix: Convert the condition to the correct format
         condition = condition.toLowerCase().replace(" ", "_");
 
         try {
