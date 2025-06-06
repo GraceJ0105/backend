@@ -8,6 +8,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.LinkedHashMap;
+import java.util.Map;
+
 @RestController
 @CrossOrigin(origins = "http://localhost:3000")
 public class BaselineController {
@@ -46,5 +49,21 @@ public class BaselineController {
         logger.info("Condition score being returned: {}", response);
 
         return (ResponseEntity<?>) response;
+    }
+
+    @PostMapping("/baselineScore")
+    public LinkedHashMap<String, Object> getBaselineScore(@RequestBody BaselineRequest request) {
+        double area = request.getBaselineAreaValue();
+
+        logger.info("Area received from front end: {}", area);
+
+        double baselineScore = 25.5;
+
+        LinkedHashMap<String, Object> response = new LinkedHashMap<>();
+        response.put("baselineScore", baselineScore);
+
+        logger.info("Response being returned: {}", response);
+
+        return response;
     }
 }
